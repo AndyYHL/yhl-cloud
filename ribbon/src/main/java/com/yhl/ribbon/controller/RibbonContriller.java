@@ -13,10 +13,11 @@ public class RibbonContriller {
     @Autowired
     RestTemplate restTemplate; //注入负载
 
+    @RequestMapping(value = "/product/hello",method = RequestMethod.GET)
     public String productHello(){
         return restTemplate.getForEntity(" http://product-service/hello",String.class).getBody();
     }
-
+    @RequestMapping(value = "/compute/hello",method = RequestMethod.GET)
     public String publisherHello(){
         return restTemplate.getForEntity("http://compute-service/hello",String.class).getBody();
     }
