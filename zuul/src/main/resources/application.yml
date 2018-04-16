@@ -23,6 +23,8 @@ zuul:
      serviceId: product-service
      path: /compute-service/**
      serviceId: compute-service
+     path: /ribbon-service/**
+     serviceId: ribbon-service
      #routes to url
      product-service-url:
       path: /product-service-url/**
@@ -30,3 +32,6 @@ zuul:
      compute-service-url:
       path: /compute-service-url/**
       url: http://localhost:1111/
+     ribbon-service-url:
+      path: /ribbon-service-url/**
+      url: http://localhost:1114/
