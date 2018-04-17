@@ -4,7 +4,7 @@ eureka:
   instance:
     prefer-ip-address: true #是否向服务器注册IP
     ip-address: ${spring.cloud.inetutils.default-ip-address}
-    instance-id:  ${spring.cloud.inetutils.default-ip-address}:${server.port}
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${server.port}
     hostname: ${spring.cloud.inetutils.default-ip-address}
   client:
     fetch-registry: false  #注册自己，用于集群形式
