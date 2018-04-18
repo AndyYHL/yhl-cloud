@@ -1,5 +1,6 @@
 package com.yhl.ribbon.controller;
 
+import com.yhl.ribbon.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +13,13 @@ import org.springframework.web.client.RestTemplate;
 public class RibbonContriller {
     @Autowired
     RestTemplate restTemplate; //注入负载
+    @Autowired
+    ProductService productService;
 
     @RequestMapping(value = "/product/hello",method = RequestMethod.GET)
     public String productHello(){
-        return restTemplate.getForEntity(" http://product-service/hello",String.class).getBody();
+        return productService.helloService();
+        //return restTemplate.getForEntity(" http://product-service/hello",String.class).getBody();
     }
     @RequestMapping(value = "/compute/hello",method = RequestMethod.GET)
     public String publisherHello(){
