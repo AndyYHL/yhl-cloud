@@ -1,0 +1,69 @@
+server:
+  port: 8111
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.106:8191/eureka/
+      register-with-eureka: true
+      fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    lease-renewal-interval-in-seconds: 30 #\u5FC3\u8DF3\u68C0\u6D4B\u68C0\u6D4B\u4E0E\u7EED\u7EA6\u65F6\u95F4
+    lease-expiration-duration-in-seconds: 50 #\u6D4B\u8BD5\u65F6\u5C06\u503C\u8BBE\u7F6E\u8BBE\u7F6E\u5C0F\u4E9B\uFF0C\u4FDD\u8BC1\u670D\u52A1\u5173\u95ED\u540E\u6CE8\u518C\u4E2D\u5FC3\u80FD\u53CA\u65F6\u8E22\u51FA\u670D
+    status-page-url-path: /hello
+    health-check-url-path: /hello
+spring:
+  application:
+    name: platform-service
+    #网页编码设置
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/platform?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: root
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    spring.datasource.filters: stat,wall,log4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+    #useGlobalDataSourceStat: true
+  thymeleaf:
+    prefix: classpath:/templates/
+mybatis:
+  #扫描配置文件
+  config-locations: classpath:mybatis/mybatis-config.xml
+  #xml的位置
+  mapper-locations: classpath:mybatis/*/*.xml
+#设置链接的数据源类型
+zipkin:
+  storage:
+    type: mysql
+#日志配置
+logging:
+  config: classpath:log4j2.xml
