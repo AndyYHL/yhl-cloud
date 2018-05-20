@@ -1,0 +1,63 @@
+server:
+  port: 8112
+eureka:
+  client:
+      service-url:
+        defaultZone: http://192.168.1.106:8191/eureka/
+      register-with-eureka: true
+      fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    lease-renewal-interval-in-seconds: 30 #\u5FC3\u8DF3\u68C0\u6D4B\u68C0\u6D4B\u4E0E\u7EED\u7EA6\u65F6\u95F4
+    lease-expiration-duration-in-seconds: 50 #\u6D4B\u8BD5\u65F6\u5C06\u503C\u8BBE\u7F6E\u8BBE\u7F6E\u5C0F\u4E9B\uFF0C\u4FDD\u8BC1\u670D\u52A1\u5173\u95ED\u540E\u6CE8\u518C\u4E2D\u5FC3\u80FD\u53CA\u65F6\u8E22\u51FA\u670D
+    status-page-url-path: /hello
+    health-check-url-path: /hello
+spring:
+  application:
+    name: door-service
+datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/platform?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: root
+    # \u4F7F\u7528druid\u6570\u636E\u6E90
+    type: com.alibaba.druid.pool.DruidDataSource
+    # \u4E0B\u9762\u4E3A\u8FDE\u63A5\u6C60\u7684\u8865\u5145\u8BBE\u7F6E\uFF0C\u5E94\u7528\u5230\u4E0A\u9762\u6240\u6709\u6570\u636E\u6E90\u4E2D
+    # \u521D\u59CB\u5316\u5927\u5C0F\uFF0C\u6700\u5C0F\uFF0C\u6700\u5927
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # \u914D\u7F6E\u83B7\u53D6\u8FDE\u63A5\u7B49\u5F85\u8D85\u65F6\u7684\u65F6\u95F4
+    maxWait: 60000
+    # \u914D\u7F6E\u95F4\u9694\u591A\u4E45\u624D\u8FDB\u884C\u4E00\u6B21\u68C0\u6D4B\uFF0C\u68C0\u6D4B\u9700\u8981\u5173\u95ED\u7684\u7A7A\u95F2\u8FDE\u63A5\uFF0C\u5355\u4F4D\u662F\u6BEB\u79D2
+    timeBetweenEvictionRunsMillis: 60000
+    # \u914D\u7F6E\u4E00\u4E2A\u8FDE\u63A5\u5728\u6C60\u4E2D\u6700\u5C0F\u751F\u5B58\u7684\u65F6\u95F4\uFF0C\u5355\u4F4D\u662F\u6BEB\u79D2
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # \u6253\u5F00PSCache\uFF0C\u5E76\u4E14\u6307\u5B9A\u6BCF\u4E2A\u8FDE\u63A5\u4E0APSCache\u7684\u5927\u5C0F
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # \u914D\u7F6E\u76D1\u63A7\u7EDF\u8BA1\u62E6\u622A\u7684filters\uFF0C\u53BB\u6389\u540E\u76D1\u63A7\u754C\u9762sql\u65E0\u6CD5\u7EDF\u8BA1\uFF0C'wall'\u7528\u4E8E\u9632\u706B\u5899
+    spring.datasource.filters: stat,wall,log4j
+    # \u901A\u8FC7connectProperties\u5C5E\u6027\u6765\u6253\u5F00mergeSql\u529F\u80FD\uFF1B\u6162SQL\u8BB0\u5F55
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # \u5408\u5E76\u591A\u4E2ADruidDataSource\u7684\u76D1\u63A7\u6570\u636E
+    #useGlobalDataSourceStat: true
+  thymeleaf:
+    prefix: classpath:/templates/
+mybatis:
+  #\u626B\u63CF\u914D\u7F6E\u6587\u4EF6
+  config-locations: classpath:mybatis/mybatis-config.xml
+  #xml\u7684\u4F4D\u7F6E
+  mapper-locations: classpath:mybatis/*/*.xml
+#\u8BBE\u7F6E\u94FE\u63A5\u7684\u6570\u636E\u6E90\u7C7B\u578B
+zipkin:
+  storage:
+    type: mysql
+#\u65E5\u5FD7\u914D\u7F6E
+logging:
+  config: classpath:log4j2.xml
