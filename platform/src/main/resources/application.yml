@@ -3,7 +3,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.1.106:8191/eureka/
+      defaultZone: http://192.168.1.100:8191/eureka/
       register-with-eureka: true
       fetch-registry: true
   instance:
@@ -24,7 +24,7 @@ spring:
       enabled: true
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/platform?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:mysql://192.168.1.132:3306/platform?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: root
     password: root
     # 使用druid数据源
