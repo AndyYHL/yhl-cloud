@@ -1,4 +1,4 @@
-package com.yhy.door.config;
+package com.yqy.door.config;
 
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
