@@ -1,4 +1,4 @@
-package com.yhy.door;
+package com.yqy.door;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

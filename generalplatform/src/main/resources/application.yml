@@ -1,0 +1,53 @@
+server:
+  port: 8191  #\u7AEF\u53E3
+eureka:
+  instance:
+    prefer-ip-address: true #\u662F\u5426\u5411\u670D\u52A1\u5668\u6CE8\u518CIP
+    ip-address: ${spring.cloud.inetutils.default-ip-address}
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
+    hostname: ${spring.cloud.inetutils.default-ip-address}
+  client:
+    fetch-registry: false  #\u6CE8\u518C\u81EA\u5DF1\uFF0C\u7528\u4E8E\u96C6\u7FA4\u5F62\u5F0F
+    register-with-eureka: false #\u82E5\u4E3Atrue\u7684\u8BDD\u4F1A\u62A5\u9519
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enableSelfPreservation: false #\u5173\u95ED\u81EA\u6211\u4FDD\u62A4
+
+spring:
+  application:
+    name: generalplatform-service
+  datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.1.132:3306/platform?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+      username: root
+      password: root
+      #hikari\u8FDE\u63A5\u6C60
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+        connection-test-query: select 1
+        connection-timeout: 30000
+        idle-timeout: 600000
+        max-lifetime: 1800000
+        maximum-pool-size: 20
+        minimum-idle: 20
+        #spring.datasource.max-idle=10
+        #\u6307\u5B9A\u8FDE\u63A5\u6C60\u7B49\u5F85\u8FDE\u63A5\u8FD4\u56DE\u7684\u6700\u5927\u7B49\u5F85\u65F6\u95F4\uFF0C\u6BEB\u79D2\u5355\u4F4D.
+        #spring.datasource.max-wait=10000
+        #\u6307\u5B9A\u5FC5\u987B\u4FDD\u6301\u8FDE\u63A5\u7684\u6700\u5C0F\u503C
+        #spring.datasource.min-idle=5
+        #\u6307\u5B9A\u8FDE\u63A5\u6C60\u4E2D\u6700\u5927\u7684\u6D3B\u8DC3\u8FDE\u63A5\u6570.
+        #spring.datasource.secondary.max-active=50
+        #spring.datasource.initial-size=5
+        #spring.datasource.validation-query=SELECT 1
+        #spring.datasource.test-on-borrow=false
+        #spring.datasource.test-while-idle=true
+        #spring.datasource.time-between-eviction-runs-millis=18800
+        #spring.datasource.jdbc-interceptors=ConnectionState;SlowQueryReport(threshold=0)
+  cloud:
+    inetutils:
+      default-ip-address: 127.0.0.1
+      default-hostname: 127.0.0.1
+      preferred-networks: 127.0.0.1
+logging:
+ config: classpath:log4j2.xml

@@ -1,4 +1,4 @@
-package com.yhy.door;
+package com.yqy.door;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

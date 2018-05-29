@@ -8,7 +8,7 @@ eureka:
     fetch-registry: true
   instance:
     prefer-ip-address: true
-    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${server.port}
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
     lease-renewal-interval-in-seconds: 30 #心跳检测检测与续约时间
     lease-expiration-duration-in-seconds: 50 #测试时将值设置设置小些，保证服务关闭后注册中心能及时踢出服
     status-page-url-path: /hello
