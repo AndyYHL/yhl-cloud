@@ -13,7 +13,7 @@ public class ProductServiceImpl implements ProductService {
 
     @HystrixCommand(fallbackMethod = "productServiceFallback")
     public String helloService(){
-        return restTemplate.getForEntity(" http://product-service/hello",String.class).getBody();
+        return restTemplate.getForEntity(" http://192.168.1.100:1113/product-service/hello",String.class).getBody();
     }
 
     public String productServiceFallback(){

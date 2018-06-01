@@ -11,7 +11,7 @@
     <name>cloud</name>
     <description>Demo project for Spring Boot</description>
     <modules>
-        <module>generalplatform</module>
+        <!--<module>generalplatform</module>-->
         <module>door</module>
         <module>platform</module>
         <module>product</module>

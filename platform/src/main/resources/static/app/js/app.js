@@ -48,7 +48,7 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window','$http', '$templateC
       }
   });*/
 
-    var menuJson = '/api/v1/sys/findMenuList',
+    /*var menuJson = '/api/v1/sys/findMenuList',
         menuURL  = menuJson + '?v=' + (new Date().getTime()); // jumps cache
 
     $rootScope.pagination = {pagestart: 0, pagesize: 10, maxsize: 8, pageindex: 1, limitOptions:[10,20,50,100]};
@@ -63,7 +63,7 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window','$http', '$templateC
     }).
     error(function(err) {
         //错误代码
-    });
+    });*/
 
   // Scope Globals
   // ----------------------------------- 
@@ -101,11 +101,11 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window','$http', '$templateC
 App.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider',
 function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
   'use strict';
+
   stateProvider = $stateProvider;
   // Set the following to true to enable the HTML5 Mode
   // You may have to set <base> tag in index and a routing configuration in your server
   $locationProvider.html5Mode(false);
-
   // defaults to dashboard
   $urlRouterProvider.otherwise('/app/dashboard');
 
@@ -4132,7 +4132,6 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     };
 
     $scope.loadSidebarMenu = function() {
-        $scope.menuItems =  menuData;
       /*var menuJson = 'server/sidebar-menu.json',
           menuURL  = menuJson + '?v=' + (new Date().getTime()); // jumps cache
       $http.get(menuURL)
@@ -4142,6 +4141,24 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
         .error(function(data, status, headers, config) {
           alert('Failure loading menu');
         });*/
+        var menuJson = '/api/v1/sys/findMenuList',
+            menuURL  = menuJson + '?v=' + (new Date().getTime()); // jumps cache
+
+        $rootScope.pagination = {pagestart: 0, pagesize: 10, maxsize: 8, pageindex: 1, limitOptions:[10,20,50,100]};
+        $rootScope.data = {parentid:0};
+        $rootScope.info={timestamp:new Date().getTime()}
+        $rootScope.searchForm = {extLimit: $rootScope.pagination,data: $rootScope.data,info:$rootScope.info};
+
+        $http.post(menuURL, $rootScope.searchForm).
+        success(function(data) {
+            $scope.menuItems = data.data;
+            menuData = data.data;
+            getMenu($scope.menuItems,stateProvider);
+            console.log(data);
+        }).
+        error(function(err) {
+            //错误代码
+        });
      };
 
      $scope.loadSidebarMenu();
