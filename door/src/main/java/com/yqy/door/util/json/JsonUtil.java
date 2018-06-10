@@ -1,7 +1,7 @@
 package com.yqy.door.util.json;
 
 
-import com.yhl.platform.state.FinalJson;
+import com.yqy.door.state.FinalJson;
 
 import java.util.List;
 
