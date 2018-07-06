@@ -15,4 +15,8 @@ public class ViewController {
         modelAndView.addObject("msg", "Hello Freemarker");
         return modelAndView;
     }
+
+    public static void main(String[] args) {
+        String device;
+    }
 }
